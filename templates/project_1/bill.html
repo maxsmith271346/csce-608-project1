@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Details</title>
+    <style>
+        .container {
+            width: 80%;
+            margin: auto;
+            font-family: Arial, sans-serif;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .bill-detail span {
+            font-weight: bold;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .bill-detail ul {
+            padding-left: 20px;
+        }
+        .bill-detail li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="section">
+            <h1>Bill Details</h1>
+        </div>
+        <div class="section">
+            <div class="bill-detail"><span>Bill ID:</span> {{ bill.bill_id }}</div>
+            <div class="bill-detail"><span>Session ID:</span> {{ bill.session_id }}</div>
+            <div class="bill-detail"><span>Bill Number:</span> {{ bill.bill_number }}</div>
+            <div class="bill-detail"><span>Status:</span> {{ bill.status }}</div>
+            <div class="bill-detail"><span>Status Description:</span> {{ bill.status_desc }}</div>
+            <div class="bill-detail"><span>Status Date:</span> {{ bill.status_date }}</div>
+            <div class="bill-detail"><span>Title:</span> {{ bill.title }}</div>
+            <div class="bill-detail"><span>Committee:</span> {{ bill.committee.name }}</div>
+            <div class="bill-detail"><span>Last Action Date:</span> {{ bill.last_action_date }}</div>
+            <div class="bill-detail"><span>Last Action:</span> {{ bill.last_action }}</div>
+        </div>
+        <div class="section">
+            <div class="bill-detail"><span>URL:</span> <a href="{{ bill.url }}" target="_blank">{{ bill.url }}</a></div>
+            <div class="bill-detail"><span>State Link:</span> <a href="{{ bill.state_link }}" target="_blank">{{ bill.state_link }}</a></div>
+        </div>
+        <div class="section">
+            <div class="bill-detail">
+                <span>Sponsors:</span>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                {% for sponsor in bill.sponsors|dictsort:"position" %}
+                <div>
+                    <a href="/person/{{ sponsor.people_id }}">{{ sponsor.role }}. {{ sponsor.name }} ({{ sponsor.party }}) - {{ sponsor.district }}</a>
+                </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="section" style="max-height: 400px; overflow-y: auto;">
+            <h2>Description</h2>
+            <div class="scrollable-section" style="max-height: 400px; overflow-y: scroll;">
+                <div class="bill-detail">{{ bill.description }}</div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Same As/Similar To</h2>
+            <div class="bill-detail">
+            <ul>
+                {% for sast in bill.sasts %}
+                <li>
+                <a href="/bill/{{ sast.sast_bill_id }}">{{ sast.bill_number }}</a>  ({{ sast.type }})
+                </li>
+                {% endfor %}
+            </ul>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Roll Calls</h2>
+            <div class="scrollable-section" style="max-height: 400px; overflow-y: scroll;"></div>
+            <table border="1" style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                <tr>
+                    <th style="width: 12%;">Date</th>
+                    <th>Chamber</th>
+                    <th>Description</th>
+                    <th>Yea</th>
+                    <th>Nay</th>
+                    <th>NV</th>
+                    <th>Absent</th>
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for rollcall in bill.rollcalls %}
+                <tr>
+                    <td style="white-space: nowrap;">{{ rollcall.date }}</td>
+                    <td>{{ rollcall.chamber }}</td>
+                    <td><a href="/rollcall/{{ rollcall.roll_call_id }}">{{ rollcall.description }}</a></td>
+                    <td>{{ rollcall.yea }}</td>
+                    <td>{{ rollcall.nay }}</td>
+                    <td>{{ rollcall.nv }}</td>
+                    <td>{{ rollcall.absent }}</td>
+                    <td>{{ rollcall.total }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="section">
+            <h2>Bill History</h2>
+            <div class="scrollable-section" style="max-height: 400px; overflow-y: scroll;"></div>
+            <table border="1" style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                <tr>
+                    <th style="width: 12%;">Date</th>
+                    <th>Chamber</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for history in bill.history %}
+                <tr>
+                    <td style="white-space: nowrap;">{{ history.date }}</td>
+                    <td>{{ history.chamber }}</td>
+                    <td>{{ history.action }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="section">
+            <h2>Documents</h2>
+            <div class="scrollable-section" style="max-height: 400px; overflow-y: scroll;"></div>
+            <table border="1" style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                <tr>
+                    <th>Bill Revision</th>
+                    <th>Source</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for document in bill.documents %}
+                <tr>
+                    <td>{{ document.document_desc }}</td>
+                    <td><a href="{{ document.state_link }}" target="_blank">View Document</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

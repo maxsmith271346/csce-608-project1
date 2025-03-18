@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roll Call Details</title>
+</head>
+<body>
+    <h1>Roll Call Details</h1>
+    <div>
+        <h2>Roll Call Information</h2>
+        <p><strong>ID:</strong> {{ roll_call.roll_call_id }}</p>
+        <p><strong>Date:</strong> {{ roll_call.date }}</p>
+        <p><strong>Chamber:</strong> {{ roll_call.chamber }}</p>
+        <p><strong>Description:</strong> {{ roll_call.description }}</p>
+        <p><strong>Yea:</strong> {{ roll_call.yea }}</p>
+        <p><strong>Nay:</strong> {{ roll_call.nay }}</p>
+        <p><strong>Not Voting:</strong> {{ roll_call.nv }}</p>
+        <p><strong>Absent:</strong> {{ roll_call.absent }}</p>
+        <p><strong>Total:</strong> {{ roll_call.total }}</p>
+    </div>
+
+    <div>
+        <h2>Bill Information</h2>
+        <p><strong>Bill ID:</strong> {{ roll_call.bill.bill_id }}</p>
+        <p><strong>Title:</strong> {{ roll_call.bill.title }}</p>
+        <p><strong>Bill Number:</strong> {{ roll_call.bill.bill_number }}</p>
+        <p><strong>Session Name:</strong> {{ roll_call.bill.session_name }}</p>
+    </div>
+
+    <div>
+        <h2>Votes</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Vote</th>
+                    <th>Description</th>
+                    <th>Name</th>
+                    <th>Party</th>
+                    <th>Role</th>
+                    <th>District</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vote in roll_call.votes %}
+                <tr>
+                    <td>{{ vote.vote }}</td>
+                    <td>{{ vote.vote_desc }}</td>
+                    <td>{{ vote.name }}</td>
+                    <td>{{ vote.party }}</td>
+                    <td>{{ vote.role }}</td>
+                    <td>{{ vote.district }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

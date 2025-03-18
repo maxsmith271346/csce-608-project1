@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bills</title>
+    <style>
+        .container {
+            width: 80%;
+            margin: auto;
+            font-family: Arial, sans-serif;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        table th {
+            background-color: #f2f2f2;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        form input[type="text"] {
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        form button {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="section">
+            <h1>Bills</h1>
+        </div>
+        <div class="section">
+            <form method="get" action="">
+                <input type="text" name="title" placeholder="Search by Title" value="{{ request.GET.title }}">
+                <input type="text" name="bill_number" placeholder="Search by Bill Number" value="{{ request.GET.bill_number }}">
+                <input type="text" name="status" placeholder="Search by Status" value="{{ request.GET.status }}">
+                <input type="text" name="sponsors" placeholder="Search by Sponsors" value="{{ request.GET.sponsors }}">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <div class="section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Bill ID</th>
+                        <th>Session ID</th>
+                        <th>Bill Number</th>
+                        <th>Status</th>
+                        <th>Status Description</th>
+                        <th>Status Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bill in bills %}
+                    <tr>
+                        <td><a href="{% url 'bill' bill_id=bill.bill_id %}">{{ bill.title }}</a></td>
+                        <td>{{ bill.bill_id }}</td>
+                        <td>{{ bill.session_id }}</td>
+                        <td>{{ bill.bill_number }}</td>
+                        <td>{{ bill.status }}</td>
+                        <td>{{ bill.status_desc }}</td>
+                        <td>{{ bill.status_date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

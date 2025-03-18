@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Person Details</title>
+    <style>
+        .container {
+            width: 80%;
+            margin: auto;
+            font-family: Arial, sans-serif;
+        }
+        .person-details, .votes {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .person-details h1 {
+            margin-top: 0;
+        }
+        .votes {
+            max-height: 400px;
+            overflow-y: scroll;
+        }
+        .vote {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        .vote:last-child {
+            border-bottom: none;
+        }
+        .vote p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="person-details">
+            <h1>{{ person.role }}. {{ person.name }}</h1>
+            <p><strong>Party:</strong> {{ person.party }}</p>
+            <p><strong>District:</strong> {{ person.district }}</p>
+        </div>
+        <div class="sponsored-bills" style="margin-bottom: 20px; padding: 20px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
+            <h2>Sponsored Bills</h2>
+            <div class="scrollable-section" style="max-height: 400px; overflow-y: scroll;">
+            {% for bill in person.sponsored_bills %}
+                <div class="bill" style="border-bottom: 1px solid #ccc; padding: 10px 0;">
+                <p><strong>Title:</strong> <a href="/bill/{{ bill.bill_id }}">{{ bill.title }}</a></p>
+                <p><strong>Bill Number:</strong> {{ bill.bill_number }}</p>
+                <p><strong>Last Action Date:</strong> {{ bill.last_action_date }}</p>
+                <p><strong>Last Action:</strong> {{ bill.last_action }}</p>
+                <p><strong>Session:</strong> {{ bill.session_name }}</p>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+        <div class="votes" style="margin-bottom: 20px; padding: 20px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
+            <h2>Votes</h2>
+            <div class="scrollable-section" style="max-height: 400px; overflow-y: scroll;">
+            {% for vote in person.votes %}
+                <div class="vote" style="border-bottom: 1px solid #ccc; padding: 10px 0;">
+                <p><strong>Vote:</strong> {{ vote.vote_desc }}</p>
+                <p><strong>Date:</strong> {{ vote.date }}</p>
+                <p><strong>Bill Title:</strong> <a href="/bill/{{ vote.bill_id }}">{{ vote.title }}</a></p>
+                <p><strong>Bill Number:</strong> {{ vote.bill_number }}</p>
+                <!-- add session -->
+                <p><strong>Session:</strong> {{ vote.session_name }}</p>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html></div>
