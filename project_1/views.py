@@ -113,6 +113,7 @@ class BillView(View):
                 "last_action": bill[11],
                 "url": bill[12],
                 "state_link": bill[13],
+                "session_name": bill[-1],
                 "sponsors": [{
                     "name": sponsor[0],
                     "position": sponsor[1],

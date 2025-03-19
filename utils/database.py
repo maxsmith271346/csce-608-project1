@@ -275,7 +275,12 @@ class Database:
 
     # TODO: add session name
     def get_bill(self, bill_id):
-        query = sql.SQL('SELECT * FROM bill WHERE bill_id = {}').format(sql.Literal(bill_id))
+        query = sql.SQL('''
+            SELECT b.*, ss.session_name
+            FROM bill b
+            JOIN session ss ON b.session_id = ss.session_id
+            WHERE bill_id = {}
+        ''').format(sql.Literal(bill_id))
         self.cursor.execute(query)
         return self.cursor.fetchone()
 

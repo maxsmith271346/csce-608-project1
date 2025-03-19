@@ -55,26 +55,21 @@
             <h1>Bill Details</h1>
         </div>
         <div class="section">
-            <div class="bill-detail"><span>Bill ID:</span> {{ bill.bill_id }}</div>
-            <div class="bill-detail"><span>Session ID:</span> {{ bill.session_id }}</div>
+            <div class="bill-detail"><span>Title:</span> {{ bill.title }}</div>
             <div class="bill-detail"><span>Bill Number:</span> {{ bill.bill_number }}</div>
-            <div class="bill-detail"><span>Status:</span> {{ bill.status }}</div>
+            <div class="bill-detail"><span>Session:</span> {{ bill.session_name }}</div>
+            <div class="bill-detail"><span>Committee:</span> {{ bill.committee.name }}</div>
             <div class="bill-detail"><span>Status Description:</span> {{ bill.status_desc }}</div>
             <div class="bill-detail"><span>Status Date:</span> {{ bill.status_date }}</div>
-            <div class="bill-detail"><span>Title:</span> {{ bill.title }}</div>
-            <div class="bill-detail"><span>Committee:</span> {{ bill.committee.name }}</div>
             <div class="bill-detail"><span>Last Action Date:</span> {{ bill.last_action_date }}</div>
             <div class="bill-detail"><span>Last Action:</span> {{ bill.last_action }}</div>
+            <div class="bill-detail"><span>Bill Link:</span> <a href="{{ bill.state_link }}" target="_blank">{{ bill.state_link }}</a></div>
             <div class="bill-detail">
                 <span>Partisan Breakdown:</span>
                 {% for breakdown in bill.partisan_breakdown %}
                     {{ breakdown.party }}: {{ breakdown.count }}{% if not forloop.last %}, {% endif %}
                 {% endfor %}
             </div>
-        </div>
-        <div class="section">
-            <div class="bill-detail"><span>URL:</span> <a href="{{ bill.url }}" target="_blank">{{ bill.url }}</a></div>
-            <div class="bill-detail"><span>State Link:</span> <a href="{{ bill.state_link }}" target="_blank">{{ bill.state_link }}</a></div>
         </div>
         <div class="section">
             <div class="bill-detail">
