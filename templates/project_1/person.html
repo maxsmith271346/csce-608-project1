@@ -34,10 +34,24 @@
         .vote p {
             margin: 5px 0;
         }
+        .button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #2980b9;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <a href="{% url 'bills' %}" class="button">Bill Search</a>
+        <a href="{% url 'people' %}" class="button">People Search</a>
         <div class="person-details">
             <h1>{{ person.role }}. {{ person.name }}</h1>
             <p><strong>Party:</strong> {{ person.party }}</p>

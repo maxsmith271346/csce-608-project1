@@ -20,6 +20,7 @@ from project_1.views import *
 
 urlpatterns = [
     path('bills', BillsView.as_view(), name='bills'),
+    path('people', PeopleView.as_view(), name='people'),
     # path to the bill view, bill_id is a required parameter
     path('bill/<int:bill_id>/', BillView.as_view(), name='bill'),
     path('person/<int:people_id>/', PersonView.as_view(), name='person'),

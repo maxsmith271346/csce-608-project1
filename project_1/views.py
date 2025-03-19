@@ -23,9 +23,22 @@ class BillsView(View):
             "last_action_date": request.GET.get('last_action_date', ''),
             "last_action": request.GET.get('last_action', ''),
             "sponsors": [s.strip() for s in request.GET.get('sponsors', '').split(',') if s.strip()],
+            "bipartisanship": request.GET.get('bipartisanship', '') == 'on'
         }
 
-        bills = db.get_bills(params)
+        # Get pagination parameters
+        page = int(request.GET.get('page', 1))
+        page_size = 50  # Number of items per page
+
+        # Fetch bills and total count
+        bills, total_bills = db.get_bills(params, page=page, page_size=page_size)
+
+        # Calculate pagination metadata
+        total_pages = (total_bills + page_size - 1) // page_size
+        has_next = page < total_pages
+        has_previous = page > 1
+
+        print("Bills", [bill[-1] for bill in bills])
 
         context = {
             "bills": [{
@@ -35,8 +48,13 @@ class BillsView(View):
                 "status": bill[3],
                 "status_desc": bill[4],
                 "status_date": bill[5],
-                "title": bill[6] if bill[6] and bill[6] != 'NaN' else bill[2]
-            } for bill in bills]
+                "title": bill[6] if bill[6] and bill[6] != 'NaN' else bill[2],
+                "bipartisanship_score": bill[-1],
+            } for bill in bills],
+            "page": page,
+            "total_pages": total_pages,
+            "has_next": has_next,
+            "has_previous": has_previous,
         }
 
         return render(request, 'project_1/index.html', context)
@@ -138,7 +156,11 @@ class BillView(View):
                 "committee": {
                     "chamber": committee[0],
                     "name": committee[1],
-                }
+                },
+                "partisan_breakdown": sorted([{
+                    "party": partisan[0],
+                    "count": partisan[1],
+                } for partisan in db.get_partisan_breakdown(bill_id)], key=lambda x: x["party"]),
             }
         }
 
@@ -163,10 +185,16 @@ class PeopleView(View):
         people = db.get_people(params)
 
         context = {
-            "people": [dict(person) for person in people]
+            "people": [{
+                "people_id": person[0],
+                "name": person[1],
+                "party": person[2],
+                "role": person[3],
+                "district": person[4],
+            } for person in people]
         }
 
-        return render(request, 'people.html', context)
+        return render(request, 'project_1/people.html', context)
 
 class PersonView(View):
     def get_votes(self, people_id):

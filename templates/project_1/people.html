@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>People</title>
+    <style>
+        .container {
+            width: 80%;
+            margin: auto;
+            font-family: Arial, sans-serif;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        table th {
+            background-color: #f2f2f2;
+        }
+        .button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #2980b9;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        form input, form button {
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        form button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+        }
+        form button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'bills' %}" class="button">Bill Search</a>
+        <a href="{% url 'people' %}" class="button">People Search</a>
+        <div class="section">
+            <header>
+                <h1>People</h1>
+            </header>
+        </div>
+        <div class="section">
+            <form method="get" action="{% url 'people' %}">
+                <input type="text" name="name" placeholder="Search by name" value="{{ request.GET.name }}">
+                <input type="text" name="party" placeholder="Search by party" value="{{ request.GET.party }}">
+                <input type="text" name="role" placeholder="Search by role" value="{{ request.GET.role }}">
+                <input type="text" name="district" placeholder="Search by district" value="{{ request.GET.district }}">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <div class="section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Party</th>
+                        <th>Role</th>
+                        <th>District</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for person in people %}
+                    <tr>
+                        <td><a href="{% url 'person' person.people_id %}">{{ person.name }}</a></td>
+                        <td>{{ person.party }}</td>
+                        <td>{{ person.role }}</td>
+                        <td>{{ person.district }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

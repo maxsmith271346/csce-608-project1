@@ -54,10 +54,24 @@
         form button:hover {
             background-color: #2980b9;
         }
+        .button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #2980b9;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <a href="{% url 'bills' %}" class="button">Bill Search</a>
+        <a href="{% url 'people' %}" class="button">People Search</a>
         <div class="section">
             <h1>Bills</h1>
         </div>
@@ -67,6 +81,8 @@
                 <input type="text" name="bill_number" placeholder="Search by Bill Number" value="{{ request.GET.bill_number }}">
                 <input type="text" name="status" placeholder="Search by Status" value="{{ request.GET.status }}">
                 <input type="text" name="sponsors" placeholder="Search by Sponsors" value="{{ request.GET.sponsors }}">
+                <input type="checkbox" name="bipartisanship" id="bipartisanship" {% if request.GET.bipartisanship %}checked{% endif %}>
+                <label for="bipartisanship">Order by Bipartisanship</label>
                 <button type="submit">Search</button>
             </form>
         </div>
@@ -75,7 +91,7 @@
                 <thead>
                     <tr>
                         <th>Title</th>
-                        <th>Bill ID</th>
+                        <th>Bipartisanship Score</th>
                         <th>Session ID</th>
                         <th>Bill Number</th>
                         <th>Status</th>
@@ -87,7 +103,7 @@
                     {% for bill in bills %}
                     <tr>
                         <td><a href="{% url 'bill' bill_id=bill.bill_id %}">{{ bill.title }}</a></td>
-                        <td>{{ bill.bill_id }}</td>
+                        <td>{{ bill.bipartisanship_score }}</td>
                         <td>{{ bill.session_id }}</td>
                         <td>{{ bill.bill_number }}</td>
                         <td>{{ bill.status }}</td>
@@ -97,6 +113,17 @@
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+        <div class="section">
+            <div>
+                {% if has_previous %}
+                <a href="?page={{ page|add:-1 }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Previous</a>
+                {% endif %}
+                <span>Page {{ page }} of {{ total_pages }}</span>
+                {% if has_next %}
+                <a href="?page={{ page|add:1 }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Next</a>
+                {% endif %}
+            </div>
         </div>
     </div>
 </body>

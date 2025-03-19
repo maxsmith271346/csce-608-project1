@@ -169,38 +169,81 @@ class Database:
         self.conn.commit()
 
     def get_bills(self, bill_params, page=1, page_size=50):
-        query = sql.SQL('SELECT * FROM bill WHERE TRUE')
+        # Base query for filtering bills
+        query = sql.SQL('''
+            SELECT b.*, sc.D, sc.R,
+                (1 - ABS(COALESCE(sc.D, 0) - COALESCE(sc.R, 0)) 
+                / NULLIF(COALESCE(sc.D, 0) + COALESCE(sc.R, 0), 0)) 
+                * (COALESCE(sc.D, 0) + COALESCE(sc.R, 0)) AS bipartisanship_score
+            FROM bill b
+            LEFT JOIN (
+                SELECT s.bill_id, 
+                    COUNT(CASE WHEN p.party = 'D' THEN 1 END) AS D, 
+                    COUNT(CASE WHEN p.party = 'R' THEN 1 END) AS R
+                FROM sponsor s
+                JOIN person p ON s.people_id = p.people_id
+                GROUP BY s.bill_id
+            ) sc ON b.bill_id = sc.bill_id
+            WHERE TRUE
+        ''')
+        count_query = sql.SQL('SELECT COUNT(*) FROM bill WHERE TRUE')  # Query to count total records
+
+        # Add filters based on bill_params
         if bill_params:
             if 'bill_id' in bill_params and bill_params['bill_id']:
-                query += sql.SQL(' AND bill_id = {}').format(sql.Literal(bill_params['bill_id']))
+                condition = sql.SQL(' AND bill_id = {}').format(sql.Literal(bill_params['bill_id']))
+                query += condition
+                count_query += condition
             if 'session_id' in bill_params and bill_params['session_id']:
-                query += sql.SQL(' AND session_id = {}').format(sql.Literal(bill_params['session_id']))
+                condition = sql.SQL(' AND session_id = {}').format(sql.Literal(bill_params['session_id']))
+                query += condition
+                count_query += condition
             if 'bill_number' in bill_params and bill_params['bill_number']:
-                query += sql.SQL(' AND bill_number = {}').format(sql.Literal(bill_params['bill_number']))
+                condition = sql.SQL(' AND bill_number = {}').format(sql.Literal(bill_params['bill_number']))
+                query += condition
+                count_query += condition
             if 'status' in bill_params and bill_params['status']:
-                query += sql.SQL(' AND status = {}').format(sql.Literal(bill_params['status']))
+                condition = sql.SQL(' AND status = {}').format(sql.Literal(bill_params['status']))
+                query += condition
+                count_query += condition
             if 'status_desc' in bill_params and bill_params['status_desc']:
-                query += sql.SQL(' AND status_desc = {}').format(sql.Literal(bill_params['status_desc']))
+                condition = sql.SQL(' AND status_desc ILIKE {}').format(sql.Literal(f"%{bill_params['status_desc']}%"))
+                query += condition
+                count_query += condition
             if 'status_date' in bill_params and bill_params['status_date']:
-                query += sql.SQL(' AND status_date = {}').format(sql.Literal(bill_params['status_date']))
+                condition = sql.SQL(' AND status_date = {}').format(sql.Literal(bill_params['status_date']))
+                query += condition
+                count_query += condition
             if 'title' in bill_params and bill_params['title']:
-                query += sql.SQL(' AND title ILIKE {}').format(sql.Literal(f"%{bill_params['title']}%"))    
+                condition = sql.SQL(' AND title ILIKE {}').format(sql.Literal(f"%{bill_params['title']}%"))
+                query += condition
+                count_query += condition
             if 'description' in bill_params and bill_params['description']:
-                query += sql.SQL(' AND description = {}').format(sql.Literal(bill_params['description']))
+                condition = sql.SQL(' AND description ILIKE {}').format(sql.Literal(f"%{bill_params['description']}%"))
+                query += condition
+                count_query += condition
             if 'committee_id' in bill_params and bill_params['committee_id']:
-                query += sql.SQL(' AND committee_id = {}').format(sql.Literal(bill_params['committee_id']))
+                condition = sql.SQL(' AND committee_id = {}').format(sql.Literal(bill_params['committee_id']))
+                query += condition
+                count_query += condition
             if 'committee' in bill_params and bill_params['committee']:
-                query += sql.SQL(' AND committee = {}').format(sql.Literal(bill_params['committee']))
+                condition = sql.SQL(' AND committee ILIKE {}').format(sql.Literal(f"%{bill_params['committee']}%"))
+                query += condition
+                count_query += condition
             if 'last_action_date' in bill_params and bill_params['last_action_date']:
-                query += sql.SQL(' AND last_action_date = {}').format(sql.Literal(bill_params['last_action_date']))
+                condition = sql.SQL(' AND last_action_date = {}').format(sql.Literal(bill_params['last_action_date']))
+                query += condition
+                count_query += condition
             if 'last_action' in bill_params and bill_params['last_action']:
-                query += sql.SQL(' AND last_action = {}').format(sql.Literal(bill_params['last_action']))
+                condition = sql.SQL(' AND last_action ILIKE {}').format(sql.Literal(f"%{bill_params['last_action']}%"))
+                query += condition
+                count_query += condition
             if 'sponsors' in bill_params and bill_params['sponsors']:
                 sponsor_conditions = sql.SQL(' OR ').join(
                     sql.SQL('p.name ILIKE {}').format(sql.Literal(f"%{sponsor}%"))
                     for sponsor in bill_params['sponsors']
                 )
-                query += sql.SQL('''
+                sponsor_filter = sql.SQL('''
                     AND bill_id IN (
                         SELECT bill_id
                         FROM sponsor s
@@ -208,9 +251,26 @@ class Database:
                         WHERE {}
                     )
                 ''').format(sponsor_conditions)
-        query += sql.SQL(' LIMIT {} OFFSET {}').format(sql.Literal(page_size), sql.Literal((page - 1) * page_size))
+                query += sponsor_filter
+                count_query += sponsor_filter
+
+        # Add LIMIT and OFFSET for pagination
+        offset = (page - 1) * page_size
+        if 'bipartisanship' in bill_params and bill_params['bipartisanship']:
+            print('bipartisanship')
+            query += sql.SQL(' ORDER BY bipartisanship_score DESC NULLS LAST LIMIT {} OFFSET {}').format(sql.Literal(page_size), sql.Literal(offset))
+        else:
+            query += sql.SQL(' ORDER BY bill_id LIMIT {} OFFSET {}').format(sql.Literal(page_size), sql.Literal(offset))
+
+        # Execute the count query to get the total number of matching records
+        self.cursor.execute(count_query)
+        total_count = self.cursor.fetchone()[0]
+
+        # Execute the paginated query to get the current page of results
         self.cursor.execute(query)
-        return self.cursor.fetchall()
+        bills = self.cursor.fetchall()
+
+        return bills, total_count
 
     # TODO: add session name
     def get_bill(self, bill_id):
@@ -219,7 +279,7 @@ class Database:
         return self.cursor.fetchone()
 
     def get_people(self, people_params):
-        query = sql.SQL('SELECT * FROM person WHERE TRUE')
+        query = sql.SQL('SELECT people_id, name, party, role, district FROM person WHERE TRUE')
         if people_params:
             if 'people_id' in people_params and people_params['people_id']:
                 query += sql.SQL(' AND people_id = {}').format(sql.Literal(people_params['people_id']))
@@ -228,19 +288,9 @@ class Database:
             if 'role' in people_params and people_params['role']:
                 query += sql.SQL(' AND role = {}').format(sql.Literal(people_params['role']))
             if 'name' in people_params and people_params['name']:
-                query += sql.SQL(' AND name = {}').format(sql.Literal(people_params['name']))
-            if 'first_name' in people_params and people_params['first_name']:
-                query += sql.SQL(' AND first_name = {}').format(sql.Literal(people_params['first_name']))
-            if 'middle_name' in people_params and people_params['middle_name']:
-                query += sql.SQL(' AND middle_name = {}').format(sql.Literal(people_params['middle_name']))
-            if 'last_name' in people_params and people_params['last_name']:
-                query += sql.SQL(' AND last_name = {}').format(sql.Literal(people_params['last_name']))
-            if 'suffix' in people_params and people_params['suffix']:
-                query += sql.SQL(' AND suffix = {}').format(sql.Literal(people_params['suffix']))
-            if 'nickname' in people_params and people_params['nickname']:
-                query += sql.SQL(' AND nickname = {}').format(sql.Literal(people_params['nickname']))
+                query += sql.SQL(' AND name ILIKE {}').format(sql.Literal(people_params['name']))
             if 'district' in people_params and people_params['district']:
-                query += sql.SQL(' AND district = {}').format(sql.Literal(people_params['district']))
+                query += sql.SQL(' AND district ILIKE {}').format(sql.Literal(f"%{people_params['district']}%"))
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
@@ -311,6 +361,17 @@ class Database:
             FROM sponsor s
             JOIN person p ON s.people_id = p.people_id
             WHERE s.bill_id = {}
+        ''').format(sql.Literal(bill_id))
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+    
+    def get_partisan_breakdown(self, bill_id):
+        query = sql.SQL('''
+            SELECT p.party, COUNT(*) as count
+            FROM sponsor s
+            JOIN person p ON s.people_id = p.people_id
+            WHERE s.bill_id = {}
+            GROUP BY p.party
         ''').format(sql.Literal(bill_id))
         self.cursor.execute(query)
         return self.cursor.fetchall()

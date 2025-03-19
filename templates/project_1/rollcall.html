@@ -4,56 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roll Call Details</title>
+    <style>
+        .container {
+            width: 80%;
+            margin: auto;
+            font-family: Arial, sans-serif;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .bill-detail span {
+            font-weight: bold;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+        table th {
+            background-color: #f2f2f2;
+        }
+        .button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
-    <h1>Roll Call Details</h1>
-    <div>
-        <h2>Roll Call Information</h2>
-        <p><strong>ID:</strong> {{ roll_call.roll_call_id }}</p>
-        <p><strong>Date:</strong> {{ roll_call.date }}</p>
-        <p><strong>Chamber:</strong> {{ roll_call.chamber }}</p>
-        <p><strong>Description:</strong> {{ roll_call.description }}</p>
-        <p><strong>Yea:</strong> {{ roll_call.yea }}</p>
-        <p><strong>Nay:</strong> {{ roll_call.nay }}</p>
-        <p><strong>Not Voting:</strong> {{ roll_call.nv }}</p>
-        <p><strong>Absent:</strong> {{ roll_call.absent }}</p>
-        <p><strong>Total:</strong> {{ roll_call.total }}</p>
-    </div>
-
-    <div>
-        <h2>Bill Information</h2>
-        <p><strong>Bill ID:</strong> {{ roll_call.bill.bill_id }}</p>
-        <p><strong>Title:</strong> {{ roll_call.bill.title }}</p>
-        <p><strong>Bill Number:</strong> {{ roll_call.bill.bill_number }}</p>
-        <p><strong>Session Name:</strong> {{ roll_call.bill.session_name }}</p>
-    </div>
-
-    <div>
-        <h2>Votes</h2>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Vote</th>
-                    <th>Description</th>
-                    <th>Name</th>
-                    <th>Party</th>
-                    <th>Role</th>
-                    <th>District</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for vote in roll_call.votes %}
-                <tr>
-                    <td>{{ vote.vote }}</td>
-                    <td>{{ vote.vote_desc }}</td>
-                    <td>{{ vote.name }}</td>
-                    <td>{{ vote.party }}</td>
-                    <td>{{ vote.role }}</td>
-                    <td>{{ vote.district }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="container">
+        <a href="{% url 'bills' %}" class="button">Bill Search</a>
+        <a href="{% url 'people' %}" class="button">People Search</a>
+        <div class="section">
+            <h1>Roll Call Details</h1>
+        </div>
+        <div class="section">
+            <h2>Roll Call Information</h2>
+            <div class="bill-detail"><span>ID:</span> {{ roll_call.roll_call_id }}</div>
+            <div class="bill-detail"><span>Date:</span> {{ roll_call.date }}</div>
+            <div class="bill-detail"><span>Chamber:</span> {{ roll_call.chamber }}</div>
+            <div class="bill-detail"><span>Description:</span> {{ roll_call.description }}</div>
+            <div class="bill-detail"><span>Yea:</span> {{ roll_call.yea }}</div>
+            <div class="bill-detail"><span>Nay:</span> {{ roll_call.nay }}</div>
+            <div class="bill-detail"><span>Not Voting:</span> {{ roll_call.nv }}</div>
+            <div class="bill-detail"><span>Absent:</span> {{ roll_call.absent }}</div>
+            <div class="bill-detail"><span>Total:</span> {{ roll_call.total }}</div>
+        </div>
+        <div class="section">
+            <h2>Bill Information</h2>
+            <div class="bill-detail"><span>Bill ID:</span> {{ roll_call.bill.bill_id }}</div>
+            <div class="bill-detail"><span>Title:</span> {{ roll_call.bill.title }}</div>
+            <div class="bill-detail"><span>Bill Number:</span> {{ roll_call.bill.bill_number }}</div>
+            <div class="bill-detail"><span>Session Name:</span> {{ roll_call.bill.session_name }}</div>
+        </div>
+        <div class="section">
+            <h2>Votes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Vote</th>
+                        <th>Description</th>
+                        <th>Name</th>
+                        <th>Party</th>
+                        <th>Role</th>
+                        <th>District</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for vote in roll_call.votes %}
+                    <tr>
+                        <td>{{ vote.vote }}</td>
+                        <td>{{ vote.vote_desc }}</td>
+                        <td><a href="/person/{{ vote.people_id }}">{{ vote.name }}</a></td>
+                        <td>{{ vote.party }}</td>
+                        <td>{{ vote.role }}</td>
+                        <td>{{ vote.district }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>

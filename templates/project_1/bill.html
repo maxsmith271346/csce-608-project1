@@ -33,10 +33,24 @@
         .bill-detail li {
             margin-bottom: 5px;
         }
+        .button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #2980b9;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <a href="{% url 'bills' %}" class="button">Bill Search</a>
+        <a href="{% url 'people' %}" class="button">People Search</a>
         <div class="section">
             <h1>Bill Details</h1>
         </div>
@@ -51,6 +65,12 @@
             <div class="bill-detail"><span>Committee:</span> {{ bill.committee.name }}</div>
             <div class="bill-detail"><span>Last Action Date:</span> {{ bill.last_action_date }}</div>
             <div class="bill-detail"><span>Last Action:</span> {{ bill.last_action }}</div>
+            <div class="bill-detail">
+                <span>Partisan Breakdown:</span>
+                {% for breakdown in bill.partisan_breakdown %}
+                    {{ breakdown.party }}: {{ breakdown.count }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </div>
         </div>
         <div class="section">
             <div class="bill-detail"><span>URL:</span> <a href="{{ bill.url }}" target="_blank">{{ bill.url }}</a></div>
