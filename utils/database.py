@@ -171,7 +171,7 @@ class Database:
     def get_bills(self, bill_params, page=1, page_size=50):
         # Base query for filtering bills
         query = sql.SQL('''
-            SELECT b.*, sc.D, sc.R,
+            SELECT b.*, ss.session_name, sc.D, sc.R,
                 (1 - ABS(COALESCE(sc.D, 0) - COALESCE(sc.R, 0)) 
                 / NULLIF(COALESCE(sc.D, 0) + COALESCE(sc.R, 0), 0)) 
                 * (COALESCE(sc.D, 0) + COALESCE(sc.R, 0)) AS bipartisanship_score
@@ -184,6 +184,7 @@ class Database:
                 JOIN person p ON s.people_id = p.people_id
                 GROUP BY s.bill_id
             ) sc ON b.bill_id = sc.bill_id
+            LEFT JOIN session ss ON b.session_id = ss.session_id
             WHERE TRUE
         ''')
         count_query = sql.SQL('SELECT COUNT(*) FROM bill WHERE TRUE')  # Query to count total records

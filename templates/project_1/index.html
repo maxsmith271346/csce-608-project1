@@ -91,24 +91,22 @@
                 <thead>
                     <tr>
                         <th>Title</th>
-                        <th>Bipartisanship Score</th>
-                        <th>Session ID</th>
                         <th>Bill Number</th>
+                        <th>Session</th>
                         <th>Status</th>
-                        <th>Status Description</th>
                         <th>Status Date</th>
+                        <th>Bipartisanship Score</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for bill in bills %}
                     <tr>
                         <td><a href="{% url 'bill' bill_id=bill.bill_id %}">{{ bill.title }}</a></td>
-                        <td>{{ bill.bipartisanship_score }}</td>
-                        <td>{{ bill.session_id }}</td>
                         <td>{{ bill.bill_number }}</td>
-                        <td>{{ bill.status }}</td>
+                        <td>{{ bill.session_name }}</td>
                         <td>{{ bill.status_desc }}</td>
                         <td>{{ bill.status_date }}</td>
+                        <td>{{ bill.bipartisanship_score }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

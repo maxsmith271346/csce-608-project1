@@ -40,6 +40,7 @@ class BillsView(View):
 
         print("Bills", [bill[-1] for bill in bills])
 
+        # TODO: add session name to bill table
         context = {
             "bills": [{
                 "bill_id": bill[0],
@@ -49,6 +50,7 @@ class BillsView(View):
                 "status_desc": bill[4],
                 "status_date": bill[5],
                 "title": bill[6] if bill[6] and bill[6] != 'NaN' else bill[2],
+                "session_name": bill[-4],
                 "bipartisanship_score": bill[-1],
             } for bill in bills],
             "page": page,
