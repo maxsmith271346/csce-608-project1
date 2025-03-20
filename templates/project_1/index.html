@@ -81,8 +81,6 @@
                 <input type="text" name="bill_number" placeholder="Search by Bill Number" value="{{ request.GET.bill_number }}">
                 <input type="text" name="status" placeholder="Search by Status" value="{{ request.GET.status }}">
                 <input type="text" name="sponsors" placeholder="Search by Sponsors" value="{{ request.GET.sponsors }}">
-                <input type="checkbox" name="bipartisanship" id="bipartisanship" {% if request.GET.bipartisanship %}checked{% endif %}>
-                <label for="bipartisanship">Order by Bipartisanship</label>
                 <button type="submit">Search</button>
             </form>
         </div>
@@ -90,12 +88,12 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Bill Number</th>
-                        <th>Session</th>
-                        <th>Status</th>
-                        <th>Status Date</th>
-                        <th>Bipartisanship Score</th>
+                        <th><a href="?sort=title&order={% if sort == 'title' and order == 'asc' %}desc{% else %}asc{% endif %}{% for key, value in request.GET.items %}{% if key != 'sort' and key != 'order' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Title</a></th>
+                        <th><a href="?sort=bill_number&order={% if sort == 'bill_number' and order == 'asc' %}desc{% else %}asc{% endif %}{% for key, value in request.GET.items %}{% if key != 'sort' and key != 'order' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Bill Number</a></th>
+                        <th><a href="?sort=session_name&order={% if sort == 'session_name' and order == 'asc' %}desc{% else %}asc{% endif %}{% for key, value in request.GET.items %}{% if key != 'sort' and key != 'order' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Session</a></th>
+                        <th><a href="?sort=status_desc&order={% if sort == 'status_desc' and order == 'asc' %}desc{% else %}asc{% endif %}{% for key, value in request.GET.items %}{% if key != 'sort' and key != 'order' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Status</a></th>
+                        <th><a href="?sort=status_date&order={% if sort == 'status_date' and order == 'asc' %}desc{% else %}asc{% endif %}{% for key, value in request.GET.items %}{% if key != 'sort' and key != 'order' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Status Date</a></th>
+                        <th><a href="?sort=bipartisanship_score&order={% if sort == 'bipartisanship_score' and order == 'asc' %}desc{% else %}asc{% endif %}{% for key, value in request.GET.items %}{% if key != 'sort' and key != 'order' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Bipartisanship Score</a></th>
                     </tr>
                 </thead>
                 <tbody>

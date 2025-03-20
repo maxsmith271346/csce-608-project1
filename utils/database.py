@@ -47,42 +47,6 @@ class Database:
     def define_schema(self):
         # define schema
         schema = """
-        CREATE TABLE IF NOT EXISTS bill (
-            bill_id INTEGER PRIMARY KEY,
-            session_id INTEGER,
-            bill_number TEXT,
-            status INTEGER,
-            status_desc TEXT,
-            status_date DATE,
-            title TEXT,
-            description TEXT,
-            committee_id INTEGER,
-            committee TEXT,
-            last_action_date DATE,
-            last_action TEXT,
-            url TEXT,
-            state_link TEXT
-        );
-        CREATE TABLE IF NOT EXISTS person (
-            people_id INTEGER PRIMARY KEY,
-            name TEXT,
-            first_name TEXT,
-            middle_name TEXT,
-            last_name TEXT,
-            suffix TEXT,
-            nickname TEXT,
-            party_id INTEGER,
-            party TEXT,
-            role_id INTEGER,
-            role TEXT,
-            district TEXT,
-            followthemoney_eid TEXT,
-            votesmart_id INTEGER,
-            opensecrets_id TEXT,
-            ballotpedia TEXT,
-            knowwho_pid INTEGER,
-            committee_id INTEGER
-        );
         CREATE TABLE IF NOT EXISTS session (
             session_id INTEGER PRIMARY KEY,
             state_id INTEGER,
@@ -102,10 +66,46 @@ class Database:
             chamber_id INTEGER,
             name TEXT
         );
+        CREATE TABLE IF NOT EXISTS person (
+            people_id INTEGER PRIMARY KEY,
+            name TEXT,
+            first_name TEXT,
+            middle_name TEXT,
+            last_name TEXT,
+            suffix TEXT,
+            nickname TEXT,
+            party_id INTEGER,
+            party TEXT,
+            role_id INTEGER,
+            role TEXT,
+            district TEXT,
+            followthemoney_eid TEXT,
+            votesmart_id INTEGER,
+            opensecrets_id TEXT,
+            ballotpedia TEXT,
+            knowwho_pid INTEGER,
+            committee_id INTEGER REFERENCES committee(committee_id)
+        );
+        CREATE TABLE IF NOT EXISTS bill (
+            bill_id INTEGER PRIMARY KEY,
+            session_id INTEGER REFERENCES session(session_id),
+            bill_number TEXT,
+            status INTEGER,
+            status_desc TEXT,
+            status_date DATE,
+            title TEXT,
+            description TEXT,
+            committee_id INTEGER REFERENCES committee(committee_id),
+            committee TEXT,
+            last_action_date DATE,
+            last_action TEXT,
+            url TEXT,
+            state_link TEXT
+        );
         CREATE TABLE IF NOT EXISTS rollcall (
             roll_call_id INTEGER PRIMARY KEY,
-            bill_id INTEGER,
-            people_id INTEGER,
+            bill_id INTEGER REFERENCES bill(bill_id),
+            people_id INTEGER REFERENCES person(people_id),
             date DATE,
             chamber TEXT,
             description TEXT,
@@ -116,7 +116,7 @@ class Database:
             total INTEGER
         );
         CREATE TABLE IF NOT EXISTS document (
-            bill_id INTEGER,
+            bill_id INTEGER REFERENCES bill(bill_id),
             document_id INTEGER PRIMARY KEY,
             document_type TEXT,
             document_size INTEGER,
@@ -126,7 +126,7 @@ class Database:
             state_link TEXT
         );
         CREATE TABLE IF NOT EXISTS history (
-            bill_id INTEGER,
+            bill_id INTEGER REFERENCES bill(bill_id),
             date DATE,
             chamber TEXT,
             sequence INTEGER,
@@ -137,19 +137,19 @@ class Database:
             type_id INTEGER,
             type TEXT,
             sast_bill_number TEXT,
-            sast_bill_id INTEGER,
-            bill_id INTEGER,
+            sast_bill_id INTEGER REFERENCES bill(bill_id),
+            bill_id INTEGER REFERENCES bill(bill_id),
             PRIMARY KEY (sast_bill_id, bill_id)
         );
         CREATE TABLE IF NOT EXISTS sponsor (
-            bill_id INTEGER,
-            people_id INTEGER,
+            bill_id INTEGER REFERENCES bill(bill_id),
+            people_id INTEGER REFERENCES person(people_id),
             position INTEGER,
             PRIMARY KEY (bill_id, people_id, position)
         );
         CREATE TABLE IF NOT EXISTS vote (
-            roll_call_id INTEGER,
-            people_id INTEGER,
+            roll_call_id INTEGER REFERENCES rollcall(roll_call_id),
+            people_id INTEGER REFERENCES person(people_id),
             vote INTEGER,
             vote_desc TEXT,
             PRIMARY KEY (roll_call_id, people_id)
@@ -168,7 +168,7 @@ class Database:
             self.cursor.execute(query)
         self.conn.commit()
 
-    def get_bills(self, bill_params, page=1, page_size=50):
+    def get_bills(self, bill_params, page=1, page_size=50, sort='bill_id', order='asc'):
         # Base query for filtering bills
         query = sql.SQL('''
             SELECT b.*, ss.session_name, sc.D, sc.R,
@@ -255,21 +255,24 @@ class Database:
                 query += sponsor_filter
                 count_query += sponsor_filter
 
+        # Add sorting
+        query += sql.SQL(' ORDER BY {} {} NULLS LAST').format(
+            sql.Identifier(sort),
+            sql.SQL(order.upper())
+        )
+
         # Add LIMIT and OFFSET for pagination
         offset = (page - 1) * page_size
-        if 'bipartisanship' in bill_params and bill_params['bipartisanship']:
-            print('bipartisanship')
-            query += sql.SQL(' ORDER BY bipartisanship_score DESC NULLS LAST LIMIT {} OFFSET {}').format(sql.Literal(page_size), sql.Literal(offset))
-        else:
-            query += sql.SQL(' ORDER BY bill_id LIMIT {} OFFSET {}').format(sql.Literal(page_size), sql.Literal(offset))
+        query += sql.SQL(' LIMIT {} OFFSET {}').format(sql.Literal(page_size), sql.Literal(offset))
 
-        # Execute the count query to get the total number of matching records
-        self.cursor.execute(count_query)
-        total_count = self.cursor.fetchone()[0]
-
-        # Execute the paginated query to get the current page of results
+        # Execute the query
         self.cursor.execute(query)
         bills = self.cursor.fetchall()
+
+        # Count query (same as before)
+        count_query = sql.SQL('SELECT COUNT(*) FROM bill WHERE TRUE')
+        self.cursor.execute(count_query)
+        total_count = self.cursor.fetchone()[0]
 
         return bills, total_count
 

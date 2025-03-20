@@ -30,8 +30,19 @@ class BillsView(View):
         page = int(request.GET.get('page', 1))
         page_size = 50  # Number of items per page
 
+        # Get sorting parameters
+        sort = request.GET.get('sort', 'bill_id')  # Default sort column
+        order = request.GET.get('order', 'asc')  # Default sort order
+
+        # Validate sort column and order
+        valid_columns = ['bill_id', 'bill_number', 'title', 'status_desc', 'status_date', 'session_name', 'bipartisanship_score']
+        if sort not in valid_columns:
+            sort = 'bill_id'
+        if order not in ['asc', 'desc']:
+            order = 'asc'
+
         # Fetch bills and total count
-        bills, total_bills = db.get_bills(params, page=page, page_size=page_size)
+        bills, total_bills = db.get_bills(params, page=page, page_size=page_size, sort=sort, order=order)
 
         # Calculate pagination metadata
         total_pages = (total_bills + page_size - 1) // page_size
@@ -57,6 +68,8 @@ class BillsView(View):
             "total_pages": total_pages,
             "has_next": has_next,
             "has_previous": has_previous,
+            "sort": sort,
+            "order": order,
         }
 
         return render(request, 'project_1/index.html', context)
