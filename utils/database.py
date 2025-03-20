@@ -367,7 +367,7 @@ class Database:
     
     def get_votes(self, people_id):
         query = sql.SQL('''
-            SELECT v.vote, r.date, r.description, r.chamber, b.title, b.bill_number, b.bill_id, s.session_name
+            SELECT v.vote, r.date, r.description, b.title, b.bill_number, b.bill_id, s.session_name, r.roll_call_id, r.chamber
             FROM vote v
             JOIN rollcall r ON v.roll_call_id = r.roll_call_id
             JOIN bill b ON r.bill_id = b.bill_id

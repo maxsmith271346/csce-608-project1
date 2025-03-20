@@ -251,6 +251,8 @@ class PersonView(View):
                     "bill_number": vote[4],
                     "bill_id": vote[5],
                     "session_name": vote[6],
+                    "roll_call_id": vote[7],
+                    "chamber": vote[8],
             } for vote in self.get_votes(person[0])], key=lambda x: x["date"] or datetime.min.date(), reverse=True),
             "sponsored_bills": sorted([{
                 "title": bill[0],

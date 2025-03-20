@@ -76,7 +76,8 @@
             <div class="scrollable-section" style="max-height: 400px; overflow-y: scroll;">
             {% for vote in person.votes %}
                 <div class="vote" style="border-bottom: 1px solid #ccc; padding: 10px 0;">
-                <p><strong>Vote:</strong> {{ vote.vote_desc }}</p>
+                <p><strong>Description:</strong> <a href="/rollcall/{{ vote.roll_call_id }}">{{ vote.description }}</a></p> 
+                <p><strong>Vote:</strong> {{ vote.vote }}</p>
                 <p><strong>Date:</strong> {{ vote.date }}</p>
                 <p><strong>Bill Title:</strong> <a href="/bill/{{ vote.bill_id }}">{{ vote.title }}</a></p>
                 <p><strong>Bill Number:</strong> {{ vote.bill_number }}</p>
