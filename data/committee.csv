@@ -1,160 +1,160 @@
-committee_id,chamber,chamber_id,name
-2526,H,114,Subcommittee on Highways and Transit
-2301,H,114,Education And The Workforce
-2311,H,114,Oversight And Government Reform
-2329,S,115,Homeland Security And Governmental Affairs
-2333,S,115,Veterans' Affairs
-2544,H,114,Subcommittee on Border and Maritime Security
-2316,H,114,Veterans' Affairs
-2955,H,114,Subcommittee on Environment
-2355,H,114,Subcommittee on Health
-2850,H,114,Subcommittee on Immigration And Border Security
-2317,H,114,Ways And Means
-3359,H,114,Subcommittee on Federal Lands
-2304,H,114,Financial Services
-2546,H,114,"Subcommittee on Economic Development, Public Buildings and Emergency Management"
-2849,H,114,"Subcommittee on Crime, Terrorism, Homeland Security, And Investigations"
-2300,H,114,Budget
-2852,H,114,"Subcommittee on Courts, Intellectual Property, And The Internet"
-2308,H,114,Intelligence
-2851,H,114,Subcommittee on the Constitution And Civil Justice
-2330,S,115,Judiciary
-2307,H,114,Administration
-2551,H,114,Subcommittee on Water Resources and Environment
-3661,H,114,Subcommittee on Digital Commerce and Consumer Protection
-2629,H,114,Subcommittee on Trade
-2362,H,114,Subcommittee on Emerging Threats and Capabilities
-2360,H,114,Subcommittee on Readiness
-2853,H,114,"Subcommittee on Regulatory Reform, Commercial And Antitrust Law"
-2598,H,114,Subcommittee on Economic Opportunity
-2361,H,114,Subcommittee on Military Personnel
-2324,S,115,Energy And Natural Resources
-2621,H,114,Subcommittee on General Farm Commodities and Risk Management
-2367,H,114,Subcommittee on Energy and Mineral Resources
-2628,H,114,Subcommittee on Human Resources
-2323,S,115,"Commerce, Science, And Transportation"
-2328,S,115,"Health, Education, Labor, And Pensions"
-3247,H,114,Conservation and Forestry
-2630,H,114,Subcommittee on Social Security
-2321,S,115,"Banking, Housing, And Urban Affairs"
-2325,S,115,Environment And Public Works
-2636,H,114,Subcommittee on Counterterrorism and Intelligence
-2358,H,114,Subcommittee on Communications and Technology
-3354,H,114,Subcommittee on Livestock and Foreign Agriculture
-2327,S,115,Foreign Relations
-2933,H,114,Subcommittee on Energy
-2583,H,114,Subcommittee on Strategic Forces
-3059,H,114,Subcommittee on Research and Technology
-3248,H,114,Nutrition
-2305,H,114,Foreign Affairs
-3361,H,114,"Subcommittee on Water, Power and Oceans"
-2298,H,114,Appropriations
-2597,H,114,Subcommittee on Disability Assistance and Memorial Affairs
-2299,H,114,Armed Services
-2549,H,114,Subcommittee on Aviation
-2310,H,114,Natural Resources
-2309,H,114,Judiciary
-3398,H,114,"Subcommittee on Indian, Insular and Alaska Native Affairs"
-2601,H,114,"Subcommittee on Emergency Preparedness, Response and Communications"
-3245,H,114,"Biotechnology, Horticulture, and Research"
-2566,H,114,Subcommittee on Asia and the Pacific
-2326,S,115,Finance
-2335,S,115,Indian Affairs
-3681,H,114,Subcommittee on Cybersecurity and Infrastructure Protection
-2558,H,114,Subcommittee on the Western Hemisphere
-3246,H,114,"Commodity Exchanges, Energy, and Credit"
-2314,H,114,Small Business
-2332,S,115,Small Business And Entrepreneurship
-2527,H,114,"Subcommittee on Railroads, Pipelines, and Hazardous Materials"
-2297,H,114,Agriculture
-3662,H,114,Subcommittee on Transportation and Protective Security
-3015,H,114,Subcommittee on Middle East and North Africa
-2318,S,115,"Agriculture, Nutrition, And Forestry"
-3054,H,114,Subcommittee on Oversight and Management Efficiency
-2617,H,114,Subcommittee on Seapower and Projection Forces
-2312,H,114,Rules
-2616,H,114,Subcommittee on Tactical Air and Land Forces
-2320,S,115,Armed Services
-2550,H,114,Subcommittee on Coast Guard and Maritime Transportation
-2313,H,114,"Science, Space, And Technology"
-2315,H,114,Transportation And Infrastructure
-3024,H,114,"Subcommittee on Africa, Global Health, Global Human Rights and International Organizations"
-3028,H,114,Subcommittee on Space
-3014,H,114,"Subcommittee on Europe, Eurasia, and Emerging Threats"
-2302,H,114,Energy And Commerce
-2567,H,114,"Subcommittee on Terrorism, Nonproliferation, and Trade"
-2565,S,115,Select Intelligence
-2631,H,114,Subcommittee on Oversight and Investigations
-2306,H,114,Homeland Security
-2547,H,114,Subcommittee on Higher Education and Workforce Training
-2543,H,114,"Subcommittee on Health, Employment, Labor, and Pensions"
-2545,H,114,"Subcommittee on Early Childhood, Elementary, and Secondary Education"
-2575,H,114,"Subcommittee on Cybersecurity, Infrastructure Protection, and Security Technologies"
-2548,H,114,Subcommittee on Workforce Protections
-3017,H,114,Subcommittee on Transportation Security
-2331,S,115,Rules And Administration
-2303,H,114,Ethics
-2322,S,115,Budget
-2319,S,115,Appropriations
-3789,H,114,Education and Labor
-3994,H,114,Subcommittee on Immigration and Citizenship
-3991,H,114,"Subcommittee on National Parks, Forests, and Public Lands"
-2349,H,114,"Subcommittee on Crime, Terrorism, and Homeland Security"
-3790,H,114,Oversight and Reform
-2521,H,114,Subcommittee on Space and Aeronautics
-4135,H,114,Environment and Climate Change
-3992,H,114,"Subcommittee on Water, Oceans, and Wildlife"
-3983,H,114,"Subcommittee on Cybersecurity, Infrastructure Protection, and Innovation"
-4134,H,114,Consumer Protection and Commerce
-4044,H,114,"Subcommittee on Antitrust, Commercial, and Administrative Law"
-3987,H,114,Subcommittee on Worker and Family Support
-4016,H,114,Subcommittee on Transportation and Maritime Security
-4010,H,114,"Subcommittee on Economic Development, Public Buildings, and Emergency Management"
-4143,H,114,"Subcommittee on the Constitution, Civil Rights, and Civil Liberties"
-3982,H,114,"Subcommittee on Border Security, Facilitation, and Operations"
-4148,H,114,Subcommittee for Indigenous Peoples of the United States
-4032,H,114,"Subcommittee on Nutrition, Oversight, and Department Operations"
-4126,H,114,"Africa, Global Health, Global Human Rights, and International Organizations"
-4128,H,114,"Middle East, North Africa and International Terrorism"
-4127,H,114,"Asia, the Pacific and Nonproliferation"
-4129,H,114,"Oversight, Management, and Accountability"
-4125,H,114,"Europe, Eurasia, Energy and the Environment"
-3984,H,114,"Subcommittee on Emergency Preparedness, Response, and Recovery"
-4052,H,114,Subcommittee on Intelligence and Emerging Threats and Capabilities
-4234,H,114,Subcommittee on Oversight
-3985,H,114,Subcommittee on Intelligence and Counterterrorism
-4130,H,114,"Western Hemisphere, Civilian Security and Trade"
-4286,H,114,Subcommittee on Select Revenue Measures
-4275,S,115,Select Ethics
-4527,H,114,Technology Modernization Subcommittee
-4528,H,114,"Subcommittee on Africa, Global Health, and Global Human Rights"
-4532,H,114,"Subcommittee on Western Hemisphere, Civilian Security, Migration and International Economic Policy"
-4529,H,114,"Subcommittee on Asia, the Pacific, Central Asia and Nonproliferation"
-4533,H,114,"Subcommittee on Middle East, North Africa and Global Counterterrorism"
-4531,H,114,"Subcommittee on International Development, International Organizations and Global Corporate Social Impact"
-4530,H,114,"Subcommittee on Europe, Energy, the Environment and Cyber"
-4692,H,114,Oversight and Accountability
-2576,H,114,"Subcommittee on Livestock, Dairy, and Poultry"
-4835,H,114,"Subcommittee on General Farm Commodities, Risk Management, and Credit"
-4858,H,114,"Subcommittee on Energy, Climate and Grid Security"
-4894,H,114,"Subcommittee on Environment, Manufacturing, and Critical Materials"
-4849,H,114,"Subcommittee on Conservation, Research, and Biotechnology"
-4811,H,114,"Subcommittee on Nutrition, Foreign Agriculture, and Horticulture"
-4972,H,114,Subcommittee on Work and Welfare
-4805,H,114,Subcommittee on Forestry
-4882,H,114,Subcommittee on Border Security and Enforcement
-4837,H,114,"Water, Wildlife, and Fisheries"
-4804,H,114,"Subcommittee on Commodity Markets, Digital Assets, and Rural Development"
-4836,H,114,Indian and Insular Affairs
-4782,H,114,"Subcommittee on Innovation, Data, and Commerce"
-4902,H,114,Subcommittee on Defense Intelligence and Overhead Architecture
-4884,H,114,"Subcommittee on Oversight, Investigations, and Accountability"
-4792,H,114,Subcommittee on the National Intelligence Enterprise
-4793,H,114,Subcommittee on the National Security Agency and Cyber
-2596,H,114,Subcommittee on Elections
-4885,H,114,Subcommittee on Emergency Management and Technology
-4883,H,114,"Subcommittee on Counterterrorism, Law Enforcement, and Intelligence"
-4903,H,114,Subcommittee on Modernization
-4878,H,114,Subcommittee on the Central Intelligence Agency
-4977,H,114,Education and Workforce
-5041,H,114,"Subcommittee on Water, Wildlife and Fisheries"
+committee_id,chamber,name
+2526,H,Subcommittee on Highways and Transit
+2301,H,Education And The Workforce
+2311,H,Oversight And Government Reform
+2329,S,Homeland Security And Governmental Affairs
+2333,S,Veterans' Affairs
+2544,H,Subcommittee on Border and Maritime Security
+2316,H,Veterans' Affairs
+2955,H,Subcommittee on Environment
+2355,H,Subcommittee on Health
+2850,H,Subcommittee on Immigration And Border Security
+2317,H,Ways And Means
+3359,H,Subcommittee on Federal Lands
+2304,H,Financial Services
+2546,H,"Subcommittee on Economic Development, Public Buildings and Emergency Management"
+2849,H,"Subcommittee on Crime, Terrorism, Homeland Security, And Investigations"
+2300,H,Budget
+2852,H,"Subcommittee on Courts, Intellectual Property, And The Internet"
+2308,H,Intelligence
+2851,H,Subcommittee on the Constitution And Civil Justice
+2330,S,Judiciary
+2307,H,Administration
+2551,H,Subcommittee on Water Resources and Environment
+3661,H,Subcommittee on Digital Commerce and Consumer Protection
+2629,H,Subcommittee on Trade
+2362,H,Subcommittee on Emerging Threats and Capabilities
+2360,H,Subcommittee on Readiness
+2853,H,"Subcommittee on Regulatory Reform, Commercial And Antitrust Law"
+2598,H,Subcommittee on Economic Opportunity
+2361,H,Subcommittee on Military Personnel
+2324,S,Energy And Natural Resources
+2621,H,Subcommittee on General Farm Commodities and Risk Management
+2367,H,Subcommittee on Energy and Mineral Resources
+2628,H,Subcommittee on Human Resources
+2323,S,"Commerce, Science, And Transportation"
+2328,S,"Health, Education, Labor, And Pensions"
+3247,H,Conservation and Forestry
+2630,H,Subcommittee on Social Security
+2321,S,"Banking, Housing, And Urban Affairs"
+2325,S,Environment And Public Works
+2636,H,Subcommittee on Counterterrorism and Intelligence
+2358,H,Subcommittee on Communications and Technology
+3354,H,Subcommittee on Livestock and Foreign Agriculture
+2327,S,Foreign Relations
+2933,H,Subcommittee on Energy
+2583,H,Subcommittee on Strategic Forces
+3059,H,Subcommittee on Research and Technology
+3248,H,Nutrition
+2305,H,Foreign Affairs
+3361,H,"Subcommittee on Water, Power and Oceans"
+2298,H,Appropriations
+2597,H,Subcommittee on Disability Assistance and Memorial Affairs
+2299,H,Armed Services
+2549,H,Subcommittee on Aviation
+2310,H,Natural Resources
+2309,H,Judiciary
+3398,H,"Subcommittee on Indian, Insular and Alaska Native Affairs"
+2601,H,"Subcommittee on Emergency Preparedness, Response and Communications"
+3245,H,"Biotechnology, Horticulture, and Research"
+2566,H,Subcommittee on Asia and the Pacific
+2326,S,Finance
+2335,S,Indian Affairs
+3681,H,Subcommittee on Cybersecurity and Infrastructure Protection
+2558,H,Subcommittee on the Western Hemisphere
+3246,H,"Commodity Exchanges, Energy, and Credit"
+2314,H,Small Business
+2332,S,Small Business And Entrepreneurship
+2527,H,"Subcommittee on Railroads, Pipelines, and Hazardous Materials"
+2297,H,Agriculture
+3662,H,Subcommittee on Transportation and Protective Security
+3015,H,Subcommittee on Middle East and North Africa
+2318,S,"Agriculture, Nutrition, And Forestry"
+3054,H,Subcommittee on Oversight and Management Efficiency
+2617,H,Subcommittee on Seapower and Projection Forces
+2312,H,Rules
+2616,H,Subcommittee on Tactical Air and Land Forces
+2320,S,Armed Services
+2550,H,Subcommittee on Coast Guard and Maritime Transportation
+2313,H,"Science, Space, And Technology"
+2315,H,Transportation And Infrastructure
+3024,H,"Subcommittee on Africa, Global Health, Global Human Rights and International Organizations"
+3028,H,Subcommittee on Space
+3014,H,"Subcommittee on Europe, Eurasia, and Emerging Threats"
+2302,H,Energy And Commerce
+2567,H,"Subcommittee on Terrorism, Nonproliferation, and Trade"
+2565,S,Select Intelligence
+2631,H,Subcommittee on Oversight and Investigations
+2306,H,Homeland Security
+2547,H,Subcommittee on Higher Education and Workforce Training
+2543,H,"Subcommittee on Health, Employment, Labor, and Pensions"
+2545,H,"Subcommittee on Early Childhood, Elementary, and Secondary Education"
+2575,H,"Subcommittee on Cybersecurity, Infrastructure Protection, and Security Technologies"
+2548,H,Subcommittee on Workforce Protections
+3017,H,Subcommittee on Transportation Security
+2331,S,Rules And Administration
+2303,H,Ethics
+2322,S,Budget
+2319,S,Appropriations
+3789,H,Education and Labor
+3994,H,Subcommittee on Immigration and Citizenship
+3991,H,"Subcommittee on National Parks, Forests, and Public Lands"
+2349,H,"Subcommittee on Crime, Terrorism, and Homeland Security"
+3790,H,Oversight and Reform
+2521,H,Subcommittee on Space and Aeronautics
+4135,H,Environment and Climate Change
+3992,H,"Subcommittee on Water, Oceans, and Wildlife"
+3983,H,"Subcommittee on Cybersecurity, Infrastructure Protection, and Innovation"
+4134,H,Consumer Protection and Commerce
+4044,H,"Subcommittee on Antitrust, Commercial, and Administrative Law"
+3987,H,Subcommittee on Worker and Family Support
+4016,H,Subcommittee on Transportation and Maritime Security
+4010,H,"Subcommittee on Economic Development, Public Buildings, and Emergency Management"
+4143,H,"Subcommittee on the Constitution, Civil Rights, and Civil Liberties"
+3982,H,"Subcommittee on Border Security, Facilitation, and Operations"
+4148,H,Subcommittee for Indigenous Peoples of the United States
+4032,H,"Subcommittee on Nutrition, Oversight, and Department Operations"
+4126,H,"Africa, Global Health, Global Human Rights, and International Organizations"
+4128,H,"Middle East, North Africa and International Terrorism"
+4127,H,"Asia, the Pacific and Nonproliferation"
+4129,H,"Oversight, Management, and Accountability"
+4125,H,"Europe, Eurasia, Energy and the Environment"
+3984,H,"Subcommittee on Emergency Preparedness, Response, and Recovery"
+4052,H,Subcommittee on Intelligence and Emerging Threats and Capabilities
+4234,H,Subcommittee on Oversight
+3985,H,Subcommittee on Intelligence and Counterterrorism
+4130,H,"Western Hemisphere, Civilian Security and Trade"
+4286,H,Subcommittee on Select Revenue Measures
+4275,S,Select Ethics
+4527,H,Technology Modernization Subcommittee
+4528,H,"Subcommittee on Africa, Global Health, and Global Human Rights"
+4532,H,"Subcommittee on Western Hemisphere, Civilian Security, Migration and International Economic Policy"
+4529,H,"Subcommittee on Asia, the Pacific, Central Asia and Nonproliferation"
+4533,H,"Subcommittee on Middle East, North Africa and Global Counterterrorism"
+4531,H,"Subcommittee on International Development, International Organizations and Global Corporate Social Impact"
+4530,H,"Subcommittee on Europe, Energy, the Environment and Cyber"
+4692,H,Oversight and Accountability
+2576,H,"Subcommittee on Livestock, Dairy, and Poultry"
+4835,H,"Subcommittee on General Farm Commodities, Risk Management, and Credit"
+4858,H,"Subcommittee on Energy, Climate and Grid Security"
+4894,H,"Subcommittee on Environment, Manufacturing, and Critical Materials"
+4849,H,"Subcommittee on Conservation, Research, and Biotechnology"
+4811,H,"Subcommittee on Nutrition, Foreign Agriculture, and Horticulture"
+4972,H,Subcommittee on Work and Welfare
+4805,H,Subcommittee on Forestry
+4882,H,Subcommittee on Border Security and Enforcement
+4837,H,"Water, Wildlife, and Fisheries"
+4804,H,"Subcommittee on Commodity Markets, Digital Assets, and Rural Development"
+4836,H,Indian and Insular Affairs
+4782,H,"Subcommittee on Innovation, Data, and Commerce"
+4902,H,Subcommittee on Defense Intelligence and Overhead Architecture
+4884,H,"Subcommittee on Oversight, Investigations, and Accountability"
+4792,H,Subcommittee on the National Intelligence Enterprise
+4793,H,Subcommittee on the National Security Agency and Cyber
+2596,H,Subcommittee on Elections
+4885,H,Subcommittee on Emergency Management and Technology
+4883,H,"Subcommittee on Counterterrorism, Law Enforcement, and Intelligence"
+4903,H,Subcommittee on Modernization
+4878,H,Subcommittee on the Central Intelligence Agency
+4977,H,Education and Workforce
+5041,H,"Subcommittee on Water, Wildlife and Fisheries"

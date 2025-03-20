@@ -1,6 +1,6 @@
-session_id,state_id,year_start,year_end,prefile,sine_die,prior,special,session_tag,session_title,session_name
-1435,52,2017,2018,FALSE,TRUE,TRUE,FALSE,Regular Session,2017-2018 Regular Session,115th Congress
-1658,52,2019,2020,FALSE,TRUE,TRUE,FALSE,Regular Session,2019-2020 Regular Session,116th Congress
-1823,52,2021,2022,FALSE,FALSE,FALSE,FALSE,Regular Session,2021-2022 Regular Session,117th Congress
-2041,52,2023,2024,FALSE,FALSE,FALSE,FALSE,Regular Session,2023-2024 Regular Session,118th Congress
-2199,52,2025,2026,FALSE,FALSE,FALSE,FALSE,Regular Session,2025-2026 Regular Session,119th Congress
+session_id,year_start,year_end,prefile,sine_die,prior,special,session_tag,session_title,session_name
+1435,2017,2018,False,True,True,False,Regular Session,2017-2018 Regular Session,115th Congress
+1658,2019,2020,False,True,True,False,Regular Session,2019-2020 Regular Session,116th Congress
+1823,2021,2022,False,False,False,False,Regular Session,2021-2022 Regular Session,117th Congress
+2041,2023,2024,False,False,False,False,Regular Session,2023-2024 Regular Session,118th Congress
+2199,2025,2026,False,False,False,False,Regular Session,2025-2026 Regular Session,119th Congress
