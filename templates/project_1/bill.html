@@ -95,7 +95,7 @@
             <ul>
                 {% for sast in bill.sasts %}
                 <li>
-                <a href="/bill/{{ sast.sast_bill_id }}">{{ sast.bill_number }}</a>  ({{ sast.type }})
+                <a href="/bill/{{ sast.sast_bill_id }}">{{ sast.sast_bill_number }}</a>  ({{ sast.type }})
                 </li>
                 {% endfor %}
             </ul>

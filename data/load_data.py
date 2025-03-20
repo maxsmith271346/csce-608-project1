@@ -24,12 +24,28 @@ def load_data(data_dir='./'):
     # Load CSV data into predefined tables
     csv_files = [f for f in os.listdir(data_dir) if os.path.isfile(os.path.join(data_dir, f)) and f.endswith('.csv')]
 
-    for csv_file in csv_files:
-        table_name = csv_file[:-4]  # Assuming the table name matches the CSV file name without the extension
-        print(f"Loading {table_name}...")
-        df = pd.read_csv(os.path.join(data_dir, csv_file))
-        df = clean_invalid_dates(df)
-        db.insert_relation(table_name, df)  # Corrected the order of arguments
+    
+    # Define the order of table loading based on dependencies
+    table_order = [
+        "session",  # Must be loaded first
+        "committee",
+        "person",
+        "bill",  # Depends on session and committee
+        "rollcall",  # Depends on bill
+        "document",  # Depends on bill
+        "history",  # Depends on bill
+        "sast",  # Depends on bill
+        "sponsor",  # Depends on bill and person
+        "vote"  # Depends on rollcall and person
+    ]
+
+    for table_name in table_order:
+        csv_file = f"{table_name}.csv"
+        if csv_file in csv_files:
+            print(f"Loading {table_name}...")
+            df = pd.read_csv(os.path.join(data_dir, csv_file))
+            df = clean_invalid_dates(df)  # Clean invalid dates if necessary
+            db.insert_relation(table_name, df)  # Insert data into the table
 
 if __name__ == "__main__":
     load_data()

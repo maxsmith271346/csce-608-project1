@@ -49,7 +49,6 @@ class Database:
         schema = """
         CREATE TABLE IF NOT EXISTS session (
             session_id INTEGER PRIMARY KEY,
-            state_id INTEGER,
             year_start INTEGER,
             year_end INTEGER,
             prefile BOOLEAN,
@@ -63,49 +62,36 @@ class Database:
         CREATE TABLE IF NOT EXISTS committee (
             committee_id INTEGER PRIMARY KEY,
             chamber TEXT,
-            chamber_id INTEGER,
             name TEXT
         );
         CREATE TABLE IF NOT EXISTS person (
             people_id INTEGER PRIMARY KEY,
             name TEXT,
-            first_name TEXT,
-            middle_name TEXT,
-            last_name TEXT,
-            suffix TEXT,
-            nickname TEXT,
-            party_id INTEGER,
             party TEXT,
-            role_id INTEGER,
             role TEXT,
             district TEXT,
             followthemoney_eid TEXT,
             votesmart_id INTEGER,
             opensecrets_id TEXT,
             ballotpedia TEXT,
-            knowwho_pid INTEGER,
-            committee_id INTEGER REFERENCES committee(committee_id)
+            knowwho_pid INTEGER
         );
         CREATE TABLE IF NOT EXISTS bill (
             bill_id INTEGER PRIMARY KEY,
             session_id INTEGER REFERENCES session(session_id),
             bill_number TEXT,
-            status INTEGER,
-            status_desc TEXT,
+            status TEXT,
             status_date DATE,
             title TEXT,
             description TEXT,
             committee_id INTEGER REFERENCES committee(committee_id),
-            committee TEXT,
             last_action_date DATE,
             last_action TEXT,
-            url TEXT,
-            state_link TEXT
+            url TEXT
         );
         CREATE TABLE IF NOT EXISTS rollcall (
-            roll_call_id INTEGER PRIMARY KEY,
             bill_id INTEGER REFERENCES bill(bill_id),
-            people_id INTEGER REFERENCES person(people_id),
+            roll_call_id INTEGER PRIMARY KEY,
             date DATE,
             chamber TEXT,
             description TEXT,
@@ -122,8 +108,7 @@ class Database:
             document_size INTEGER,
             document_mime TEXT,
             document_desc TEXT,
-            url TEXT,
-            state_link TEXT
+            url TEXT
         );
         CREATE TABLE IF NOT EXISTS history (
             bill_id INTEGER REFERENCES bill(bill_id),
@@ -134,9 +119,7 @@ class Database:
             PRIMARY KEY (bill_id, sequence)
         );
         CREATE TABLE IF NOT EXISTS sast (
-            type_id INTEGER,
             type TEXT,
-            sast_bill_number TEXT,
             sast_bill_id INTEGER REFERENCES bill(bill_id),
             bill_id INTEGER REFERENCES bill(bill_id),
             PRIMARY KEY (sast_bill_id, bill_id)
@@ -150,8 +133,7 @@ class Database:
         CREATE TABLE IF NOT EXISTS vote (
             roll_call_id INTEGER REFERENCES rollcall(roll_call_id),
             people_id INTEGER REFERENCES person(people_id),
-            vote INTEGER,
-            vote_desc TEXT,
+            vote TEXT,
             PRIMARY KEY (roll_call_id, people_id)
         );
         """
@@ -171,7 +153,8 @@ class Database:
     def get_bills(self, bill_params, page=1, page_size=50, sort='bill_id', order='asc'):
         # Base query for filtering bills
         query = sql.SQL('''
-            SELECT b.*, ss.session_name, sc.D, sc.R,
+            SELECT b.bill_id, b.bill_number, b.status, b.status_date, b.title,
+                ss.session_name, c.name AS committee,
                 (1 - ABS(COALESCE(sc.D, 0) - COALESCE(sc.R, 0)) 
                 / NULLIF(COALESCE(sc.D, 0) + COALESCE(sc.R, 0), 0)) 
                 * (COALESCE(sc.D, 0) + COALESCE(sc.R, 0)) AS bipartisanship_score
@@ -185,6 +168,7 @@ class Database:
                 GROUP BY s.bill_id
             ) sc ON b.bill_id = sc.bill_id
             LEFT JOIN session ss ON b.session_id = ss.session_id
+            LEFT JOIN committee c ON b.committee_id = c.committee_id
             WHERE TRUE
         ''')
         count_query = sql.SQL('SELECT COUNT(*) FROM bill WHERE TRUE')  # Query to count total records
@@ -192,7 +176,7 @@ class Database:
         # Add filters based on bill_params
         if bill_params:
             if 'bill_id' in bill_params and bill_params['bill_id']:
-                condition = sql.SQL(' AND bill_id = {}').format(sql.Literal(bill_params['bill_id']))
+                condition = sql.SQL(' AND b.bill_id = {}').format(sql.Literal(bill_params['bill_id']))
                 query += condition
                 count_query += condition
             if 'session_id' in bill_params and bill_params['session_id']:
@@ -223,10 +207,6 @@ class Database:
                 condition = sql.SQL(' AND description ILIKE {}').format(sql.Literal(f"%{bill_params['description']}%"))
                 query += condition
                 count_query += condition
-            if 'committee_id' in bill_params and bill_params['committee_id']:
-                condition = sql.SQL(' AND committee_id = {}').format(sql.Literal(bill_params['committee_id']))
-                query += condition
-                count_query += condition
             if 'committee' in bill_params and bill_params['committee']:
                 condition = sql.SQL(' AND committee ILIKE {}').format(sql.Literal(f"%{bill_params['committee']}%"))
                 query += condition
@@ -245,7 +225,7 @@ class Database:
                     for sponsor in bill_params['sponsors']
                 )
                 sponsor_filter = sql.SQL('''
-                    AND bill_id IN (
+                    AND b.bill_id IN (
                         SELECT bill_id
                         FROM sponsor s
                         JOIN person p ON s.people_id = p.people_id
@@ -274,6 +254,8 @@ class Database:
         self.cursor.execute(count_query)
         total_count = self.cursor.fetchone()[0]
 
+        print(bills[1])
+
         return bills, total_count
 
     # TODO: add session name
@@ -290,8 +272,6 @@ class Database:
     def get_people(self, people_params):
         query = sql.SQL('SELECT people_id, name, party, role, district FROM person WHERE TRUE')
         if people_params:
-            if 'people_id' in people_params and people_params['people_id']:
-                query += sql.SQL(' AND people_id = {}').format(sql.Literal(people_params['people_id']))
             if 'party' in people_params and people_params['party']:
                 query += sql.SQL(' AND party = {}').format(sql.Literal(people_params['party']))
             if 'role' in people_params and people_params['role']:
@@ -356,7 +336,7 @@ class Database:
     
     def get_rollcall_votes(self, role_call_id):
         query = sql.SQL('''
-            SELECT v.vote, v.vote_desc, p.name, p.party, p.role, p.district, p.people_id
+            SELECT v.vote, p.name, p.party, p.role, p.district, p.people_id
             FROM vote v
             JOIN person p ON v.people_id = p.people_id
             WHERE v.roll_call_id = {}
@@ -387,7 +367,7 @@ class Database:
     
     def get_votes(self, people_id):
         query = sql.SQL('''
-            SELECT v.vote, v.vote_desc, r.date, r.description, r.chamber, b.title, b.bill_number, b.bill_id, s.session_name
+            SELECT v.vote, r.date, r.description, r.chamber, b.title, b.bill_number, b.bill_id, s.session_name
             FROM vote v
             JOIN rollcall r ON v.roll_call_id = r.roll_call_id
             JOIN bill b ON r.bill_id = b.bill_id
@@ -410,9 +390,16 @@ class Database:
 
     def get_sasts(self, bill_id):
         query = sql.SQL('''
-            SELECT s.type, s.sast_bill_number, s.sast_bill_id, s.bill_id, b.title, b.bill_number
+            SELECT s.type, sb.sast_bill_number, s.sast_bill_id, s.bill_id, b.title, b.bill_number
             FROM sast s
-            JOIN bill b ON s.sast_bill_id = b.bill_id
+            JOIN (
+                SELECT bill_id, bill_number, title
+                FROM bill
+            ) b ON s.bill_id = b.bill_id
+            JOIN (
+                SELECT bill_id, bill_number AS sast_bill_number
+                FROM bill
+            ) sb ON s.sast_bill_id = sb.bill_id
             WHERE s.bill_id = {}
         ''').format(sql.Literal(bill_id))
         self.cursor.execute(query)
@@ -438,7 +425,7 @@ class Database:
     
     def get_bill_documents(self, bill_id):
         query = sql.SQL('''
-            SELECT d.document_id, d.document_type, d.document_size, d.document_mime, d.document_desc, d.url, d.state_link
+            SELECT d.document_id, d.document_type, d.document_size, d.document_mime, d.document_desc, d.url
             FROM document d
             WHERE d.bill_id = {}
         ''').format(sql.Literal(bill_id))

@@ -90,6 +90,7 @@
                     <tr>
                         <th><a href="?sort=title&order={% if sort == 'title' and order == 'asc' %}desc{% else %}asc{% endif %}{% for key, value in request.GET.items %}{% if key != 'sort' and key != 'order' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Title</a></th>
                         <th><a href="?sort=bill_number&order={% if sort == 'bill_number' and order == 'asc' %}desc{% else %}asc{% endif %}{% for key, value in request.GET.items %}{% if key != 'sort' and key != 'order' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Bill Number</a></th>
+                        <th><a href="?sort=committee&order={% if sort == 'committee' and order == 'asc' %}desc{% else %}asc{% endif %}{% for key, value in request.GET.items %}{% if key != 'sort' and key != 'order' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Committee</a></th>
                         <th><a href="?sort=session_name&order={% if sort == 'session_name' and order == 'asc' %}desc{% else %}asc{% endif %}{% for key, value in request.GET.items %}{% if key != 'sort' and key != 'order' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Session</a></th>
                         <th><a href="?sort=status_desc&order={% if sort == 'status_desc' and order == 'asc' %}desc{% else %}asc{% endif %}{% for key, value in request.GET.items %}{% if key != 'sort' and key != 'order' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Status</a></th>
                         <th><a href="?sort=status_date&order={% if sort == 'status_date' and order == 'asc' %}desc{% else %}asc{% endif %}{% for key, value in request.GET.items %}{% if key != 'sort' and key != 'order' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Status Date</a></th>
@@ -101,8 +102,9 @@
                     <tr>
                         <td><a href="{% url 'bill' bill_id=bill.bill_id %}">{{ bill.title }}</a></td>
                         <td>{{ bill.bill_number }}</td>
+                        <td>{{ bill.committee }}</td>
                         <td>{{ bill.session_name }}</td>
-                        <td>{{ bill.status_desc }}</td>
+                        <td>{{ bill.status }}</td>
                         <td>{{ bill.status_date }}</td>
                         <td>{{ bill.bipartisanship_score }}</td>
                     </tr>

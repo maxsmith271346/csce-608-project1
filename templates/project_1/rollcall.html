@@ -62,7 +62,6 @@
         </div>
         <div class="section">
             <h2>Roll Call Information</h2>
-            <div class="bill-detail"><span>ID:</span> {{ roll_call.roll_call_id }}</div>
             <div class="bill-detail"><span>Date:</span> {{ roll_call.date }}</div>
             <div class="bill-detail"><span>Chamber:</span> {{ roll_call.chamber }}</div>
             <div class="bill-detail"><span>Description:</span> {{ roll_call.description }}</div>
@@ -74,8 +73,7 @@
         </div>
         <div class="section">
             <h2>Bill Information</h2>
-            <div class="bill-detail"><span>Bill ID:</span> {{ roll_call.bill.bill_id }}</div>
-            <div class="bill-detail"><span>Title:</span> {{ roll_call.bill.title }}</div>
+            <div class="bill-detail"><span>Title:</span> <a href="/bill/{{ roll_call.bill.bill_id }}">{{ roll_call.bill.title }}</a></div>
             <div class="bill-detail"><span>Bill Number:</span> {{ roll_call.bill.bill_number }}</div>
             <div class="bill-detail"><span>Session Name:</span> {{ roll_call.bill.session_name }}</div>
         </div>
@@ -85,7 +83,6 @@
                 <thead>
                     <tr>
                         <th>Vote</th>
-                        <th>Description</th>
                         <th>Name</th>
                         <th>Party</th>
                         <th>Role</th>
@@ -96,7 +93,6 @@
                     {% for vote in roll_call.votes %}
                     <tr>
                         <td>{{ vote.vote }}</td>
-                        <td>{{ vote.vote_desc }}</td>
                         <td><a href="/person/{{ vote.people_id }}">{{ vote.name }}</a></td>
                         <td>{{ vote.party }}</td>
                         <td>{{ vote.role }}</td>

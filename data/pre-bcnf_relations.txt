@@ -10,15 +10,12 @@ documents(document_id,bill_id,document_type,document_size,document_mime,document
 
 history(bill_id,sequence,date,chamber,action)
     bill_id,sequence --> date,chamber,action
-    bill_id          --> chamber
 
 people(people_id,name,party,role,district,followthemoney_eid,votesmart_id,opensecrets_id,ballotpedia,knowwho_pid)
     people_id --> name,party,role,district,followthemoney_eid,votesmart_id,opensecrets_id,ballotpedia,knowwho_pid
 
 rollcall(roll_call_id,bill_id,date,chamber,description,yea,nay,nv,absent,total)
     roll_call_id --> bill_id,date,chamber,description,yea,nay,nv,absent,total
-    bill_id      --> chamber
-
 
 sasts(sast_bill_id,bill_id,type,sast_bill_number)
     sast_bill_id,bill_id --> type,sast_bill_number
