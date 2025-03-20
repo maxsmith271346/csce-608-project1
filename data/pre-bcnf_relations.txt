@@ -1,19 +1,34 @@
 bills(bill_id,session_id,bill_number,status,status_date,title,description,committee_id,committee,last_action_date,last_action,url)
+    bill_id     --> session_id,bill_number,status,status_date,title,description,committee_id,committee,last_action_date,last_action,url
+    committe_id --> committee
 
 committees(committee_id,chamber,name)
+    committe_id+ --> committee_id,chamber,name
 
-documents(bill_id,document_id,document_type,document_size,document_mime,document_desc,url)
+documents(document_id,bill_id,document_type,document_size,document_mime,document_desc,url)
+    document_id --> bill_id,document_type,document_size,document_mime,document_desc,url
 
-history(bill_id,date,chamber,sequence,action)
+history(bill_id,sequence,date,chamber,action)
+    bill_id,sequence --> date,chamber,action
+    bill_id          --> chamber
 
 people(people_id,name,party,role,district,followthemoney_eid,votesmart_id,opensecrets_id,ballotpedia,knowwho_pid)
+    people_id --> name,party,role,district,followthemoney_eid,votesmart_id,opensecrets_id,ballotpedia,knowwho_pid
 
-rollcall(bill_id,roll_call_id,date,chamber,description,yea,nay,nv,absent,total)
+rollcall(roll_call_id,bill_id,date,chamber,description,yea,nay,nv,absent,total)
+    roll_call_id --> bill_id,date,chamber,description,yea,nay,nv,absent,total
+    bill_id      --> chamber
 
-sasts(type,sast_bill_number,sast_bill_id,bill_id)
+
+sasts(sast_bill_id,bill_id,type,sast_bill_number)
+    sast_bill_id,bill_id --> type,sast_bill_number
+    sast_bill_id         --> sast_bill_number
 
 sessions(session_id,year_start,year_end,prefile,sine_die,prior,special,session_tag,session_title,session_name)
+    session_id --> year_start,year_end,prefile,sine_die,prior,special,session_tag,session_title,session_name
 
 sponsors(bill_id,people_id,position)
+    bill_id,people_id --> position
 
 votes(roll_call_id,people_id,vote)
+    roll_call_id,people_id --> vote
