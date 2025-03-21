@@ -1,8 +1,8 @@
 bills(bill_id,session_id,bill_number,status,status_date,title,description,committee_id,last_action_date,last_action,url)
-    bill_id     --> session_id,bill_number,status,status_date,title,description,committee_id,last_action_date,last_action,url
+    bill_id --> session_id,bill_number,status,status_date,title,description,committee_id,last_action_date,last_action,url
 
 committees(committee_id,chamber,name)
-    committe_id+ --> committee_id,chamber,name
+    committe_id --> committee_id,chamber,name
 
 documents(document_id,bill_id,document_type,document_size,document_mime,document_desc,url)
     document_id --> bill_id,document_type,document_size,document_mime,document_desc,url

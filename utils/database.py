@@ -288,40 +288,6 @@ class Database:
         self.cursor.execute(query)
         return self.cursor.fetchone()
 
-    def get_sessions(self, session_tag, session_title, session_name, special):
-        query = sql.SQL('SELECT * FROM session WHERE TRUE')
-        if session_tag:
-            query += sql.SQL(' AND session_tag = {}').format(sql.Literal(session_tag))
-        if session_title:
-            query += sql.SQL(' AND session_title = {}').format(sql.Literal(session_title))
-        if session_name:
-            query += sql.SQL(' AND session_name = {}').format(sql.Literal(session_name))
-        if special:
-            query += sql.SQL(' AND special = {}').format(sql.Literal(special))
-        self.cursor.execute(query)
-        return self.cursor.fetchall()
-
-    def get_session(self, session_tag):
-        query = sql.SQL('SELECT * FROM session WHERE session_tag = {}').format(sql.Literal(session_tag))
-        self.cursor.execute(query)
-        return self.cursor.fetchone()
-
-    def get_committees(self, committee_id, committee_name, chamber):
-        query = sql.SQL('SELECT * FROM committee WHERE TRUE')
-        if committee_id:
-            query += sql.SQL(' AND committee_id = {}').format(sql.Literal(committee_id))
-        if committee_name:
-            query += sql.SQL(' AND committee_name = {}').format(sql.Literal(committee_name))
-        if chamber:
-            query += sql.SQL(' AND chamber = {}').format(sql.Literal(chamber))
-        self.cursor.execute(query)
-        return self.cursor.fetchall()
-
-    def get_committee(self, committee_id):
-        query = sql.SQL('SELECT * FROM committee WHERE committee_id = {}').format(sql.Literal(committee_id))
-        self.cursor.execute(query)
-        return self.cursor.fetchone()
-
     def get_rollcall(self, role_call_id):
         query = sql.SQL('''
             SELECT r.roll_call_id, r.date, r.chamber, r.description,
@@ -424,11 +390,11 @@ class Database:
         return self.cursor.fetchall()
     
     def get_bill_documents(self, bill_id):
-        query = sql.SQL('''
-            SELECT d.document_id, d.document_type, d.document_size, d.document_mime, d.document_desc, d.url
-            FROM document d
-            WHERE d.bill_id = {}
-        ''').format(sql.Literal(bill_id))
+            query = sql.SQL('''
+                SELECT d.document_id, d.document_type, d.document_size, d.document_mime, d.document_desc, d.url
+                FROM document d
+                WHERE d.bill_id = {}
+            ''').format(sql.Literal(bill_id))
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
