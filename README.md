@@ -18,7 +18,7 @@ Follow these steps to set up the project:
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/maxsmith271346/csce-608-project1.git
 cd project_1
 ```
 
