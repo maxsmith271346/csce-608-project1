@@ -390,11 +390,11 @@ class Database:
         return self.cursor.fetchall()
     
     def get_bill_documents(self, bill_id):
-            query = sql.SQL('''
-                SELECT d.document_id, d.document_type, d.document_size, d.document_mime, d.document_desc, d.url
-                FROM document d
-                WHERE d.bill_id = {}
-            ''').format(sql.Literal(bill_id))
+        query = sql.SQL('''
+            SELECT d.document_id, d.document_type, d.document_size, d.document_mime, d.document_desc, d.url
+            FROM document d
+            WHERE d.bill_id = {}
+        ''').format(sql.Literal(bill_id))
         self.cursor.execute(query)
         return self.cursor.fetchall()
 

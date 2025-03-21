@@ -17,12 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from project_1.views import *
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('bills', BillsView.as_view(), name='bills'),
     path('people', PeopleView.as_view(), name='people'),
-    # path to the bill view, bill_id is a required parameter
     path('bill/<int:bill_id>/', BillView.as_view(), name='bill'),
     path('person/<int:people_id>/', PersonView.as_view(), name='person'),
     path('rollcall/<int:rollcall_id>/', RollCallView.as_view(), name='rollcall'),
+    path('', RedirectView.as_view(url='bills')),
 ]
