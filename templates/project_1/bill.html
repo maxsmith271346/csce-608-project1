@@ -63,7 +63,7 @@
             <div class="bill-detail"><span>Status Date:</span> {{ bill.status_date }}</div>
             <div class="bill-detail"><span>Last Action Date:</span> {{ bill.last_action_date }}</div>
             <div class="bill-detail"><span>Last Action:</span> {{ bill.last_action }}</div>
-            <div class="bill-detail"><span>Bill Link:</span> <a href="{{ bill.state_link }}" target="_blank">{{ bill.state_link }}</a></div>
+            <div class="bill-detail"><span>Bill Link:</span> <a href="{{ bill.url }}" target="_blank">{{ bill.url }}</a></div>
             <div class="bill-detail">
                 <span>Partisan Breakdown:</span>
                 {% for breakdown in bill.partisan_breakdown %}
@@ -169,7 +169,7 @@
                 {% for document in bill.documents %}
                 <tr>
                     <td>{{ document.document_desc }}</td>
-                    <td><a href="{{ document.state_link }}" target="_blank">View Document</a></td>
+                    <td><a href="{{ document.url }}" target="_blank">View Document</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>
